@@ -1,0 +1,61 @@
+# ===== 前端（showcase）=====
+# node_modules 可用 package-lock.json 还原（74MB，不入库）
+node_modules/
+# 构建产物
+dist/
+dist-ssr/
+
+# ===== Keil / MDK-ARM 编译中间产物 =====
+# 只保留 .uvprojx / .uvoptx 等工程文件，产物全部忽略
+*.o
+*.d
+*.crf
+*.axf
+*.hex
+*.bin
+*.elf
+*.lnp
+*.dep
+*.lst
+*.map
+*.htm
+*.build_log.htm
+*.bak
+*.scvd
+# Keil 的编译输出子目录（形如 MDK-ARM/123/），里面绝大多数是 .axf/.hex/.map 等产物
+MDK-ARM/*/
+# ⚠️ 但 123.sct 是**链接器分散加载文件**（定义 Flash/RAM 布局），属于工程源码不是产物，
+#    必须保留 —— 否则克隆下来会缺内存布局配置、链接行为可能不同。
+!MDK-ARM/*/*.sct
+# 保留可能存在的 RTE 配置（编译器包依赖）
+!MDK-ARM/RTE/
+
+# ===== 通用 =====
+# 日志
+*.log
+build.log
+# 备份目录（用户手工备份的旧版本，不入库）
+*_bak_*/
+Core_bak_*/
+Core_ui_version_*/
+
+# 编译器/编辑器
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# 本地工具环境（Claude Code 技能配置，与项目交付无关）
+.claude/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# ===== 后端运行时数据（数据库与备份，不入库）=====
+# 数据库是运行时生成的，入库会让每次跑都冲突
+*.db
+*.db-journal
+houduan/server/backup/
